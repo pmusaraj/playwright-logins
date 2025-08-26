@@ -1,0 +1,11 @@
+node_modules/
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+*.log
+*.csv
+/screenshots/
+/tests/temp/
+.env
+.env.sample
