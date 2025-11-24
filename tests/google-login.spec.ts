@@ -5,18 +5,21 @@ const screenshotPrefix = loginPageUrl.replace(/^https?:\/\//, '').replace(/\/log
 
 test.afterEach(async ({ page }, testInfo) => {
   if (testInfo.status !== testInfo.expectedStatus) {
-    const screenshotPath = `screenshots/facebook/screenshot-${screenshotPrefix}.png`;
+    const screenshotPath = `screenshots/google/screenshot-${screenshotPrefix}.png`;
     await page.screenshot({ path: screenshotPath, timeout: 5000 });
  }
 });
 
-test('Facebook Login', async ({ page }) => {
+test('Google Login', async ({ page }) => {
   await page.goto(loginPageUrl);
 
-  await page.locator('.btn-social.facebook').click();
+  if (page.url().includes(loginPageUrl)) {
+    // Click the button if it is not the only login method (if it is, page redirects)
+    await page.locator('.btn-social.google_oauth2').click();
+  }
 
-  await expect(page.locator('input[name="email"]')).toBeVisible();
-  await expect(page.locator('input[type="password"]')).toBeVisible();
+  await expect(page.locator('input[type="email"]')).toBeVisible();
+  await expect(page).toHaveURL(/accounts.google.com\//);
 
   // For debugging, only applies when running tests in headed mode
   // await page.pause();

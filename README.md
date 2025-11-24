@@ -38,10 +38,14 @@ pnpm run ui
 
 ### Bulk Testing
 
-Run tests against all sites in `site-list.csv`:
+Run tests against sites in `site-list-LOGIN_METHOD.csv`:
 
 ```bash
-node run-tests.js
+LOGIN_METHOD=google node run-tests.js
+LOGIN_METHOD=facebook node run-tests.js
+LOGIN_METHOD=x node run-tests.js
+LOGIN_METHOD=discord node run-tests.js
+LOGIN_METHOD=github node run-tests.js
 ```
 
 This will:
@@ -53,7 +57,7 @@ This will:
 
 ## CSV Format
 
-The `site-list.csv` file should contain columns for `forum_name` and `url`:
+The `site-list-LOGIN_METHOD.csv` file should contain columns for `forum_name` and `url`:
 
 ```csv
 "forum_name","url"

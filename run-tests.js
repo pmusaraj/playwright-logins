@@ -8,8 +8,10 @@ const path = require("path");
 const logPath = path.join(__dirname, "test-results.log");
 fs.writeFileSync(logPath, "");
 
+const loginMethod = process.env.LOGIN_METHOD || "facebook";
+
 // Read and parse CSV
-const csvPath = path.join(__dirname, "site-list.csv");
+const csvPath = path.join(__dirname, `site-list-${loginMethod}.csv`);
 const csvContent = fs.readFileSync(csvPath, "utf-8");
 const lines = csvContent.trim().split("\n");
 
@@ -56,7 +58,7 @@ for (let i = 1; i < lines.length; i++) {
   try {
     // Run the test with environment variables
     const output = execSync(
-      `FORUM_NAME="${forumName}" SITE_URL="${url}" npx playwright test tests/facebook-login.spec.ts`,
+      `FORUM_NAME="${forumName}" SITE_URL="${url}" npx playwright test tests/${loginMethod}-login.spec.ts`,
       {
         env: {
           ...process.env,
